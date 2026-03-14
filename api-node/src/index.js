@@ -18,7 +18,7 @@ app.get('/', async (req, res) => {
 
 app.get('/ping', async (_, res) => {
   res.send('pong');
-});
+}); 
 
 const server = app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
@@ -27,6 +27,6 @@ const server = app.listen(port, () => {
 process.on('SIGTERM', () => {
   console.debug('SIGTERM signal received: closing HTTP server');
   server.close(() => {
-    console.debug('HTTP server closed');
+    console.debug('HTTP server closed'); 
   });
 });

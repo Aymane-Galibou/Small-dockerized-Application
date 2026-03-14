@@ -2,10 +2,9 @@ const fs = require('fs');
 
 const { Pool } = require('pg');
 
-databaseUrl =
-  process.env.DATABASE_URL ||
-  fs.readFileSync(process.env.DATABASE_URL_FILE, 'utf8');
+// const databaseUrl =process.env.DATABASE_URL
 
+const databaseUrl='postgres://postgres:foobarbaz@localhost:5432/postgres'
 const pool = new Pool({
   connectionString: databaseUrl,
 });
