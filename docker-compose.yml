@@ -1,0 +1,30 @@
+services:
+  # The Front-end Service
+  frontend:
+    build:
+      context: ./client-react     # Look in this folder for the Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"                  # Maps your browser to Nginx
+    depends_on:
+      - api
+
+  # The Back-end Service
+  api:
+    build:
+      context: ./api-node
+    ports:
+      - "3000:3000"  # HOST:CONTAINER (This creates the link)
+    environment:
+      - DB_HOST=db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"  # HOST:CONTAINER
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: foobarbaz
+      POSTGRES_DB: postgres

@@ -2,9 +2,10 @@ const fs = require('fs');
 
 const { Pool } = require('pg');
 
-// const databaseUrl =process.env.DATABASE_URL
 
-const databaseUrl='postgres://postgres:foobarbaz@localhost:5432/postgres'
+const databaseUrl = 'postgres://postgres:foobarbaz@db:5432/postgres';
+
+
 const pool = new Pool({
   connectionString: databaseUrl,
 });

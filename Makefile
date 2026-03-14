@@ -1,5 +1,5 @@
 # Define the variable for the Makefile to use
-DATABASE_URL=postgres://postgres:foobarbaz@localhost:5432/postgres
+const databaseUrl = postgres://postgres:foobarbaz@127.0.0.1:5432/postgres;
 
 .PHONY: run-postgres
 run-postgres:
@@ -12,6 +12,7 @@ run-postgres:
 		postgres:15.1-alpine
 
 .PHONY: run-api-node
+
 run-api-node:
 	@echo Starting node api
 	powershell -Command "$$env:DATABASE_URL='${DATABASE_URL}'; cd api-node; npm run dev"
