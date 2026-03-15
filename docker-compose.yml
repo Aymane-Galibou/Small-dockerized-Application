@@ -1,29 +1,41 @@
+version: '3.8'
+
 services:
-  # The Front-end Service
   frontend:
-    build:
-      context: ./client-react     # Look in this folder for the Dockerfile
+    build: 
+      context: ./client-react
       dockerfile: Dockerfile
     ports:
-      - "80:80"                  # Maps your browser to Nginx
+      - "80:80" # Only this is exposed to your laptop
     depends_on:
-      - api
+      - api-node
+      - api-golang
 
-  # The Back-end Service
-  api:
-    build:
-      context: ./api-node
-    ports:
-      - "3000:3000"  # HOST:CONTAINER (This creates the link)
+  api-node:
+    build: ./api-node
+    expose:
+      - "3000" # Internal communication only
     environment:
       - DB_HOST=db
     depends_on:
       - db
 
+  api-golang:
+    build: 
+      context: ./api-golang
+      dockerfile: Dockerfile # Fixed the path
+    expose:
+      - "8080" # Internal communication only
+    environment:
+      - DATABASE_URL=postgres://postgres:foobarbaz@db:5432/postgres
+    restart: unless-stopped
+    depends_on:
+      - db
+
   db:
     image: postgres:15
-    ports:
-      - "5432:5432"  # HOST:CONTAINER
+    expose:
+      - "5432" # Hidden from the public
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: foobarbaz
